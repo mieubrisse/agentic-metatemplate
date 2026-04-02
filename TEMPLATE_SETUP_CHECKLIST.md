@@ -9,7 +9,7 @@ This checklist is for **template authors** — people who created a repo from th
 - [ ] Replace the `<!-- BEGIN METATEMPLATE -->` ... `<!-- END METATEMPLATE -->` block in CLAUDE.md with content describing the new template (project structure, build commands, conventions, editing guidelines)
 - [ ] Replace README.md with one describing the new template — include a callout at the top directing users to run `/setup-repo`, and explain what the template provides
 - [ ] Update `.source-templates.yml`: set the existing metatemplate entry's `lastSyncedCommit` to the current HEAD of the metatemplate repo, then add a second entry for the new template itself using `owner-replaceme`/`project-replaceme` placeholders (end-users will replace these via `/setup-repo`)
-- [ ] Add template-specific items to `REPO_SETUP_CHECKLIST.md` (build verification, tool setup, etc.)
+- [ ] Ask the user what additional setup steps end-users of this template will need (build verification, tool installation, environment configuration, etc.) and add them to `REPO_SETUP_CHECKLIST.md`
 - [ ] Add template-specific permissions to `.claude/settings.json` (build tools, linters, language runtimes)
 - [ ] Add quality checks to `.githooks/pre-commit` (linting, formatting, tests)
 - [ ] 🚨 USER ACTION: Mark the repo as a "Template repository" on GitHub (Settings → General → Template repository checkbox)
