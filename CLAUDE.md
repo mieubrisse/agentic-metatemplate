@@ -3,6 +3,8 @@ project-replaceme
 
 > **First time here?** Run `/initialize-repo` in [Claude Code](https://claude.com/claude-code) to set up this project. The skill walks you through every setup step automatically.
 
+Before starting any task, scan this file for unfilled placeholder blocks — text matching `[Template author: ...]`. If any exist, stop and inform the user that the project's CLAUDE.md has sections that were not customized from the template. List every unfilled section. Do not attempt to work around missing context.
+
 A [brief project description — template author replaces this paragraph with what the project does, who it's for, and why it exists].
 
 This file contains the non-obvious context an agent needs to work effectively in this repo — conventions, build commands, and workflow rules that cannot be inferred from reading the code alone.
@@ -20,6 +22,11 @@ Building and Running
 
 [Template author: add the build, test, and run commands for this project. Include any prerequisites or environment setup needed.]
 
+Common Agent Mistakes
+---------------------
+
+[Template author: add 2-3 mistakes that agents commonly make in this codebase — things that look correct but are subtly wrong. This is the highest-value section for steering agent behavior. Delete this placeholder when populated.]
+
 Required Workflows
 ------------------
 
@@ -34,7 +41,7 @@ Invoke `/technical-writer` when modifying the README. The skill produces documen
 Issue Tracking
 --------------
 
-This project uses **bd** (Beads) for issue tracking, configured in shared Dolt server mode. The server runs at `127.0.0.1` and auto-starts when needed.
+This project uses **bd** (Beads) for issue tracking, configured in shared Dolt server mode. The server runs at `127.0.0.1` and auto-starts when needed. [Template author: if you use a different tracker, replace this section.]
 
 ```bash
 bd prime          # Load workflow context
