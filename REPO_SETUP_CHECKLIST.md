@@ -9,8 +9,8 @@ This checklist is consumed by the `/setup-repo` skill. Run that skill instead of
 - [ ] Configure git hooks: `git config core.hooksPath .githooks`
 - [ ] Initialize beads: `bd init --shared-server --prefix <project-name>`
 - [ ] Choose a license and create the LICENSE file
-- [ ] Update CLAUDE.md: replace the placeholder description with project-specific context (tech stack, commands, conventions, project structure)
-- [ ] Update `.source-templates.yml`: change `repo` to this project's repo (e.g., `github.com/owner-replaceme/project-replaceme`), set `lastSyncedCommit` to `TODO`, and update `guidance` to describe what this template provides
+- [ ] Update CLAUDE.md: replace the content between `<!-- BEGIN TEMPLATE -->` and `<!-- END TEMPLATE -->` markers with project-specific context (tech stack, commands, conventions, project structure)
+- [ ] Update `.source-templates.yml`: find the entry containing `owner-replaceme`/`project-replaceme` and set its `lastSyncedCommit` to the current HEAD of the template repo. Update `guidance` if needed. Leave other entries unchanged.
 - [ ] Remove the template usage callout from the top of README.md
 - [ ] Verify the project builds successfully
 - [ ] Delete this file (REPO_SETUP_CHECKLIST.md)

@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # Beads will append its integration block below when you run 'bd init'.

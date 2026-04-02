@@ -6,7 +6,7 @@ This checklist is consumed by the `/setup-template` skill. Run that skill instea
 This checklist is for **template authors** — people who created a repo from the agentic-metatemplate and want to turn it into their own template.
 
 - [ ] Get the template's name, purpose, and technology stack from the user
-- [ ] Replace the `<!-- BEGIN METATEMPLATE -->` ... `<!-- END METATEMPLATE -->` block in CLAUDE.md with content describing the new template (project structure, build commands, conventions, editing guidelines)
+- [ ] Replace the `<!-- BEGIN METATEMPLATE -->` ... `<!-- END METATEMPLATE -->` block in CLAUDE.md with content describing the new template (project structure, build commands, conventions, editing guidelines). Wrap the new content in `<!-- BEGIN TEMPLATE -->` ... `<!-- END TEMPLATE -->` markers so that end-users' `/setup-repo` agent knows what to replace with project-specific context
 - [ ] Replace README.md with one describing the new template — include a callout at the top directing users to run `/setup-repo`, and explain what the template provides
 - [ ] Update `.source-templates.yml`: set the existing metatemplate entry's `lastSyncedCommit` to the current HEAD of the metatemplate repo, then add a second entry for the new template itself using `owner-replaceme`/`project-replaceme` placeholders (end-users will replace these via `/setup-repo`)
 - [ ] Ask the user what additional setup steps end-users of this template will need (build verification, tool installation, environment configuration, etc.) and add them to `REPO_SETUP_CHECKLIST.md`
