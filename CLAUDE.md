@@ -1,7 +1,7 @@
 project-replaceme
 =================
 
-> **First time here?** Run `/initialize-repo` in [Claude Code](https://claude.com/claude-code) to set up this project. The skill walks you through every setup step automatically.
+> **First time here?** Run `/setup-repo` in [Claude Code](https://claude.com/claude-code) to set up this project. The skill walks you through every setup step automatically.
 
 Before starting any task, scan this file for unfilled placeholder blocks — text matching `[Template author: ...]`. If any exist, stop and inform the user that the project's CLAUDE.md has sections that were not customized from the template. List every unfilled section. Do not attempt to work around missing context.
 

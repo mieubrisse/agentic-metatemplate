@@ -4,6 +4,6 @@
     This template provides the agentic repo infrastructure: Claude Code configuration,
     Beads issue tracking, git hooks, the initialize-repo skill, and the sync-templates
     skill. Downstream repos will have added technology-specific code, extended the
-    SETUP_CHECKLIST, and customized the CLAUDE.md. When syncing, focus on improvements
+    REPO_SETUP_CHECKLIST, and customized the CLAUDE.md. When syncing, focus on improvements
     to the shared infrastructure (skills, hooks, settings, checklist base items).
     Ignore changes to placeholder content or example text.
