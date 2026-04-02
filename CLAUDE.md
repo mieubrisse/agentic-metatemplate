@@ -1,3 +1,4 @@
+<!-- BEGIN METATEMPLATE — replace everything between these markers with your template's CLAUDE.md -->
 agentic-metatemplate
 ====================
 
@@ -12,11 +13,13 @@ Repository Structure
 CLAUDE.md                           This file
 README.md                           Public-facing docs (explains the pattern, how to use)
 REPO_SETUP_CHECKLIST.md             Base setup steps for repos created from child templates
+TEMPLATE_SETUP_CHECKLIST.md         Setup steps for template authors (you)
 .source-templates.yml               Template lineage tracking (self-referential here)
 .claude/
   settings.json                     Claude Code permissions and hooks
   skills/
     setup-repo/SKILL.md             Agent-driven project setup (reads the checklist)
+    setup-template/SKILL.md         Agent-driven template setup (reads the template checklist)
     sync-templates/SKILL.md         Pull upstream template improvements
 .githooks/                          Git hook shells (Beads populates via bd init)
   pre-commit                        Quality gates placeholder
@@ -29,13 +32,14 @@ REPO_SETUP_CHECKLIST.md             Base setup steps for repos created from chil
 How the Pieces Fit Together
 ---------------------------
 
-Template authors create a repo from this metatemplate, then:
+Template authors create a repo from this metatemplate, then run `/setup-template` to configure it. This:
 
-1. Add technology-specific code and build tooling
-2. Extend `REPO_SETUP_CHECKLIST.md` with template-specific setup steps
-3. Replace this `CLAUDE.md` with one describing their template
-4. Update `.source-templates.yml` to point to their own repo
-5. Replace the README
+1. Replaces metatemplate-specific content in CLAUDE.md with their template's context
+2. Replaces the README with one describing their template
+3. Updates `.source-templates.yml` to point to their own repo
+4. Removes the template setup infrastructure (this checklist and skill)
+
+After that, the template author adds technology-specific code, extends `REPO_SETUP_CHECKLIST.md`, and customizes `settings.json`.
 
 End-users of child templates run `/setup-repo`, which reads `REPO_SETUP_CHECKLIST.md` and walks through each item.
 
@@ -52,6 +56,12 @@ Changes to these files propagate to every child template via `/sync-templates`:
 - **settings.json** — base permissions only. Template authors add their own tool permissions.
 - **.githooks/** — minimal shells. Beads injects its blocks; template authors add quality checks to pre-commit.
 
+Required Workflows
+------------------
+
+Invoke `/technical-writer` when modifying the README — it is the public face of this project.
+<!-- END METATEMPLATE -->
+
 Issue Tracking
 --------------
 
@@ -66,7 +76,7 @@ bd close <id>     # Complete an issue
 
 Run `bd prime` for full workflow details. Install with `brew install steveyegge/beads/beads`.
 
-Required Workflows
-------------------
+Syncing with Upstream Templates
+-------------------------------
 
-Invoke `/technical-writer` when modifying the README — it is the public face of this project.
+This project tracks its upstream template(s) via `.source-templates.yml`. Invoke `/sync-templates` to pull in improvements from the template repos this project was generated from. The skill diffs upstream changes, triages them for relevance, and applies the ones that fit — without overwriting your customizations.

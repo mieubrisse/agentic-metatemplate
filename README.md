@@ -15,7 +15,7 @@ The Pattern
 
 An **agentic template repo** is a regular GitHub template repo with added infrastructure that lets an AI agent handle the setup:
 
-1. **A setup checklist** (`REPO_REPO_SETUP_CHECKLIST.md`) — a machine-readable list of every step needed to initialize a project from the template. Placeholder replacements, tool configuration, verification commands, and manual steps that require human input are all encoded here.
+1. **A setup checklist** (`REPO_SETUP_CHECKLIST.md`) — a machine-readable list of every step needed to initialize a project from the template. Placeholder replacements, tool configuration, verification commands, and manual steps that require human input are all encoded here.
 
 2. **A setup skill** (`.claude/skills/setup-repo/`) — a [Claude Code](https://claude.com/claude-code) skill that reads the checklist and executes it. The user opens their new repo in Claude Code, runs `/setup-repo`, and the agent walks them through everything.
 
@@ -39,17 +39,11 @@ You use this metatemplate to create a new template repo, then add the technology
 Using This Metatemplate
 -----------------------
 
-### 1. Create your template repo
-
-Click **"Use this template"** on GitHub to create a new repo. This will be your template (e.g., `go-cli-template`, `nextjs-saas-template`).
-
-### 2. Add your technology-specific code
-
-This is the creative part. Add whatever scaffolding, source code, build configuration, and tooling your template should ship with. There are no constraints on what you add — the metatemplate provides the agent infrastructure, and you provide the domain expertise.
-
-### 3. Extend the setup checklist
-
-Open `REPO_SETUP_CHECKLIST.md`. It comes with base items that apply to all projects (placeholder replacement, Beads initialization, license selection, git hooks). Add items specific to your template. For example, a Go CLI template might add:
+1. Click **"Use this template"** on GitHub to create a new repo. This will be your template (e.g., `go-cli-template`, `nextjs-saas-template`).
+2. Clone your new repo and open it in [Claude Code](https://claude.com/claude-code).
+3. Run `/setup-template`. The agent walks you through configuring the CLAUDE.md, README, template lineage, and GitHub settings.
+4. Add your technology-specific code — source scaffolding, build configuration, CI pipelines, whatever your template should ship with.
+5. Extend `REPO_SETUP_CHECKLIST.md` with template-specific setup steps. For example, a Go CLI template might add:
 
 ```markdown
 - [ ] Verify Go code compiles: `cd src && go build ./...`
@@ -57,27 +51,7 @@ Open `REPO_SETUP_CHECKLIST.md`. It comes with base items that apply to all proje
 - [ ] 🚨 USER ACTION: Create a fine-grained PAT for the Homebrew tap
 ```
 
-Items prefixed with `🚨 USER ACTION` are surfaced prominently by the initialization agent and require the human to confirm completion before proceeding.
-
-### 4. Customize CLAUDE.md
-
-Replace the placeholder sections in `CLAUDE.md` with your template's actual project structure, build commands, and conventions. Keep the Beads and sync-templates sections — they apply to all projects. The `/setup-repo` callout at the top should stay as-is; it's what end-users see when they first open the project.
-
-### 5. Customize the Claude Code settings
-
-Edit `.claude/settings.json` to add permissions for your template's tooling. The base settings include Beads permissions and standard file access. Add whatever your template needs — build tools, linters, language runtimes.
-
-### 6. Write your README
-
-Replace this README with one that describes your template. Include a callout block at the top (like the one in this repo) that tells users how to get started with `/setup-repo`. See [go-cli-template](https://github.com/mieubrisse/go-cli-template) for an example.
-
-### 7. Update the template lineage
-
-Edit `.source-templates.yml` and set `lastSyncedCommit` to the current HEAD of this metatemplate repo. This lets your template pull in future improvements from the metatemplate via `/sync-templates`.
-
-### 8. Mark as a template
-
-In your repo's GitHub settings (Settings → General), check the **Template repository** box.
+Items prefixed with `🚨 USER ACTION` are surfaced prominently by the agent and require human confirmation before proceeding.
 
 What Your Users Get
 -------------------
@@ -108,12 +82,14 @@ Repository Layout
 
 ```
 CLAUDE.md                           Project context for Claude Code agents
-REPO_SETUP_CHECKLIST.md             Setup steps (consumed by /setup-repo)
+REPO_SETUP_CHECKLIST.md             End-user setup steps (consumed by /setup-repo)
+TEMPLATE_SETUP_CHECKLIST.md         Template author setup steps (consumed by /setup-template)
 .source-templates.yml               Upstream template lineage tracking
 .claude/
   settings.json                     Claude Code permissions and hooks
   skills/
-    setup-repo/SKILL.md             Agent-driven project setup
+    setup-repo/SKILL.md             Agent-driven project setup (for end-users)
+    setup-template/SKILL.md         Agent-driven template setup (for template authors)
     sync-templates/SKILL.md         Pull upstream template improvements
 .githooks/                          Git hooks (Beads appends its blocks via bd init)
   pre-commit                        Quality gates (template author extends)
