@@ -1,47 +1,61 @@
-project-replaceme
-=================
+agentic-metatemplate
+====================
 
-> **First time here?** Run `/setup-repo` in [Claude Code](https://claude.com/claude-code) to set up this project. The skill walks you through every setup step automatically.
+A GitHub template repo for creating agentic template repos. This repo contains no application code — it is infrastructure files only (Claude Code config, git hooks, setup checklist, skills).
 
-Before starting any task, scan this file for unfilled placeholder blocks — text matching `[Template author: ...]`. If any exist, stop and inform the user that the project's CLAUDE.md has sections that were not customized from the template. List every unfilled section. Do not attempt to work around missing context.
+When working here, you are editing the metatemplate itself. Changes affect every future template created from it.
 
-A [brief project description — template author replaces this paragraph with what the project does, who it's for, and why it exists].
-
-This file contains the non-obvious context an agent needs to work effectively in this repo — conventions, build commands, and workflow rules that cannot be inferred from reading the code alone.
-
-Project Structure
------------------
-
-```
-[Template author: replace this with the actual project layout.
-Show the directory tree with brief annotations for each directory's purpose.]
-```
-
-Building and Running
+Repository Structure
 --------------------
 
-[Template author: add the build, test, and run commands for this project. Include any prerequisites or environment setup needed.]
+```
+CLAUDE.md                           This file
+README.md                           Public-facing docs (explains the pattern, how to use)
+REPO_SETUP_CHECKLIST.md             Base setup steps for repos created from child templates
+.source-templates.yml               Template lineage tracking (self-referential here)
+.claude/
+  settings.json                     Claude Code permissions and hooks
+  skills/
+    setup-repo/SKILL.md             Agent-driven project setup (reads the checklist)
+    sync-templates/SKILL.md         Pull upstream template improvements
+.githooks/                          Git hook shells (Beads populates via bd init)
+  pre-commit                        Quality gates placeholder
+  prepare-commit-msg                Beads populates on init
+  post-checkout                     Beads populates on init
+  post-merge                        Beads populates on init
+  pre-push                          Beads populates on init
+```
 
-Common Agent Mistakes
----------------------
+How the Pieces Fit Together
+---------------------------
 
-[Template author: add 2-3 mistakes that agents commonly make in this codebase — things that look correct but are subtly wrong. This is the highest-value section for steering agent behavior. Delete this placeholder when populated.]
+Template authors create a repo from this metatemplate, then:
 
-Required Workflows
+1. Add technology-specific code and build tooling
+2. Extend `REPO_SETUP_CHECKLIST.md` with template-specific setup steps
+3. Replace this `CLAUDE.md` with one describing their template
+4. Update `.source-templates.yml` to point to their own repo
+5. Replace the README
+
+End-users of child templates run `/setup-repo`, which reads `REPO_SETUP_CHECKLIST.md` and walks through each item.
+
+The `/sync-templates` skill lets downstream repos pull improvements from their upstream template by diffing `.source-templates.yml`'s `lastSyncedCommit` against HEAD.
+
+Editing Guidelines
 ------------------
 
-### New features
+Changes to these files propagate to every child template via `/sync-templates`:
 
-Invoke `/brainstorm` before starting any new feature work. This ensures the design is explored and validated before code is written, preventing wasted effort on approaches that miss requirements or have better alternatives.
-
-### README changes
-
-Invoke `/technical-writer` when modifying the README. The skill produces documentation that is clear, well-structured, and consistent with the project's voice.
+- **REPO_SETUP_CHECKLIST.md** — base items should be universal (placeholder replacement, beads init, license, hooks). Do not add technology-specific items.
+- **setup-repo skill** — keep it generic. It reads the checklist; the checklist is what varies.
+- **sync-templates skill** — the triage/apply/verify workflow. Changes here affect all downstream sync operations.
+- **settings.json** — base permissions only. Template authors add their own tool permissions.
+- **.githooks/** — minimal shells. Beads injects its blocks; template authors add quality checks to pre-commit.
 
 Issue Tracking
 --------------
 
-This project uses **bd** (Beads) for issue tracking, configured in shared Dolt server mode. The server runs at `127.0.0.1` and auto-starts when needed. [Template author: if you use a different tracker, replace this section.]
+This project uses **bd** (Beads) for issue tracking in shared Dolt server mode.
 
 ```bash
 bd prime          # Load workflow context
@@ -50,15 +64,9 @@ bd create "Title" # Create an issue
 bd close <id>     # Complete an issue
 ```
 
-Run `bd prime` for full workflow details.
+Run `bd prime` for full workflow details. Install with `brew install steveyegge/beads/beads`.
 
-If `bd` is not installed, issue tracking commands will fail. The git hooks handle a missing `bd` gracefully — they skip beads integration and continue — so a missing `bd` will not block commits. To install beads:
+Required Workflows
+------------------
 
-```bash
-brew install steveyegge/beads/beads
-```
-
-Syncing with Upstream Templates
--------------------------------
-
-This project tracks its upstream template(s) via `.source-templates.yml`. Invoke `/sync-templates` to pull in improvements from the template repos this project was generated from. The skill diffs upstream changes, triages them for relevance, and applies the ones that fit — without overwriting your customizations.
+Invoke `/technical-writer` when modifying the README — it is the public face of this project.
